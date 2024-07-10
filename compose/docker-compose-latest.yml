@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   stirling-pdf:
-    container_name: Stirling-PDF-2
-    image: frooodle/s-pdf:latest
+    container_name: sak-document-tools-platform
+    image: sdtp:latest
     deploy:
       resources:
         limits:
@@ -13,7 +13,7 @@ services:
       timeout: 10s
       retries: 16
     ports:
-      - "8081:8080"
+      - "8080:8080"
     volumes:
       - ./stirling/latest/data:/usr/share/tessdata:rw
       - ./stirling/latest/config:/configs:rw
@@ -23,7 +23,7 @@ services:
       SECURITY_ENABLELOGIN: "false"
       LANGS: "en_GB,en_US,ar_AR,de_DE,fr_FR,es_ES,zh_CN,zh_TW,ca_CA,it_IT,sv_SE,pl_PL,ro_RO,ko_KR,pt_BR,ru_RU,el_GR,hi_IN,hu_HU,tr_TR,id_ID,th_TH"
       INSTALL_BOOK_AND_ADVANCED_HTML_OPS: "true"
-      SYSTEM_DEFAULTLOCALE: th_TH
+      SYSTEM_DEFAULTLOCALE: th-TH
       UI_APPNAME: SAK Document Tools Platform (SDTP)
       UI_HOMEDESCRIPTION: เครื่องมือจัดการเอกสาร PDF บริษัท ศักดิ์สยามลิสซิ่ง จำกัด (มหาชน)
       UI_APPNAMENAVBAR: SAK-Document Tools Platform
