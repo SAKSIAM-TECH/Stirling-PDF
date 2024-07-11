@@ -78,13 +78,12 @@ jobs:
       - name: Build and push main Dockerfile fat
         uses: docker/build-push-action@v5
         with:
-          builder: ${{ steps.buildx.outputs.name }}
-        context: .
-        file: ./Dockerfile-fat
-        push: true
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        tags: ${{ steps.meta3.outputs.tags }}
-        labels: ${{ steps.meta3.outputs.labels }}
-        build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
-        platforms: linux/amd64,linux/arm64/v8
+          context: .
+          file: ./Dockerfile-fat
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: ${{ steps.meta2.outputs.tags }}
+          labels: ${{ steps.meta2.outputs.labels }}
+          build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
+          platforms: linux/amd64,linux/arm64/v8
