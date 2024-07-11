@@ -74,6 +74,8 @@ jobs:
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=true
             type=sha,prefix={{branch}}-,format=short
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/main' }}
 
       - name: Build and push main Dockerfile
         uses: docker/build-push-action@v5
@@ -89,6 +91,9 @@ jobs:
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
           platforms: linux/amd64,linux/arm64/v8
 
+      - name: Clean up Docker system after main Dockerfile
+        run: docker system prune -af
+
       - name: Generate tags ultra-lite
         id: meta2
         uses: docker/metadata-action@v5
@@ -99,6 +104,7 @@ jobs:
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=true
             type=sha,prefix={{branch}}-,format=short
+            type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push Dockerfile-ultra-lite
         uses: docker/build-push-action@v5
@@ -114,6 +120,10 @@ jobs:
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
           platforms: linux/amd64,linux/arm64/v8
 
+      - name: Clean up Docker system after Dockerfile-ultra-lite
+        if: github.ref != 'refs/heads/main'
+        run: docker system prune -af
+
       - name: Generate tags fat
         id: meta3
         uses: docker/metadata-action@v5
@@ -124,6 +134,7 @@ jobs:
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=true
             type=sha,prefix={{branch}}-,format=short
+            type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push main Dockerfile fat
         uses: docker/build-push-action@v5
@@ -139,3 +150,7 @@ jobs:
           labels: ${{ steps.meta3.outputs.labels }}
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
           platforms: linux/amd64,linux/arm64/v8
+
+      - name: Clean up Docker system after Dockerfile-fat
+        if: github.ref != 'refs/heads/main'
+        run: docker system prune -af
