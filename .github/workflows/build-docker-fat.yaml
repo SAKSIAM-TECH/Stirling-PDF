@@ -72,7 +72,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=true
-            type=sha,prefix={{branch}}-,format=short
+            type=sha,value=fat,prefix={{branch}}-,format=short
             type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push main Dockerfile fat

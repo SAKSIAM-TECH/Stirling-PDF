@@ -71,7 +71,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=true
-            type=sha,prefix={{branch}}-,format=short
+            type=sha,value=fat,prefix={{branch}}-,format=short
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/main' }}
 
