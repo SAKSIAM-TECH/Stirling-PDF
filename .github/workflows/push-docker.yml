@@ -71,7 +71,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.REGISTRY }}/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/s-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=true
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
