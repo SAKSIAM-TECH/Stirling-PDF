@@ -71,7 +71,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=true
-            type=sha,value=fat,prefix={{branch}}-,format=short
+            type=sha,value=ultra-lite,prefix={{branch}}-,format=short
 
       - name: Build and push Dockerfile-ultra-lite
         uses: docker/build-push-action@v5

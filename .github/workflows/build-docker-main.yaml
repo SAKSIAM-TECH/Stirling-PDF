@@ -71,7 +71,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=true
-            type=sha,value=fat,prefix={{branch}}-,format=short
+            type=shaprefix={{branch}}-,format=short
 
       - name: Build and push main Dockerfile
         uses: docker/build-push-action@v5
