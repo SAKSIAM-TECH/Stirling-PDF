@@ -2,7 +2,7 @@ version: '3.3'
 services:
   stirling-pdf:
     container_name: sak-document-tools-platform
-    image: sdtp:latest
+    image: sakdocumenttoolsplatform:latest
     deploy:
       resources:
         limits:

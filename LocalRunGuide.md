@@ -1,3 +1,16 @@
+### LocalRunGuide For Saksiam
+
+หลังจากการ Dev มีขั้นตอนการ Build ต่อไปนี้
+
+```bash
+./gradlew build
+
+docker build -t sakdocumenttoolsplatform:latest .
+
+cd compose
+docker-compose -f docker-compose-sso.yml up
+```
+
 
 To run the application without Docker/Podman, you will need to manually install all dependencies and build the necessary components.
 
