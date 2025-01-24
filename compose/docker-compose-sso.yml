@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+  stirling-pdf:
+    container_name: sak-document-tools-platform
+    image: sakdocumenttoolsplatform:latest
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/v1/info/status | grep -q 'UP' && curl -fL http://localhost:8080/ | grep -qv 'Please sign in'"]
+      interval: 5s
+      timeout: 10s
+      retries: 16
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./stirling/latest/data:/usr/share/tessdata:rw
+      - ./stirling/latest/config:/configs:rw
+      - ./stirling/latest/logs:/logs:rw
+    environment:
+      DOCKER_ENABLE_SECURITY: "false"
+      SECURITY_ENABLELOGIN: "true"
+      VERSION_TAG: "0.26.1"
+      SECURITY_OAUTH2_ENABLED: "true"
+      SECURITY_OAUTH2_AUTOCREATEUSER: "true" # This is set to true to allow auto-creation of non-existing users in Stirling-PDF
+      SECURITY_OAUTH2_ISSUER: "https://sso.saksiam.net/auth/realms/leasing"  # Change with any other provider that supports OpenID Connect Discovery (/.well-known/openid-configuration) end-point
+      SECURITY_OAUTH2_CLIENTID: "saktech-app" # Client ID from your provider
+      SECURITY_OAUTH2_CLIENTSECRET: "8UzlcvI1PqwiGjwEiFpinn8PRGBin1BJ"  # Client Secret from your provider
+      SECURITY_OAUTH2_SCOPES: "openid,profile,email" # Expected OAuth2 Scope
+      SECURITY_OAUTH2_USEASUSERNAME: "username" # Default is 'email'; custom fields can be used as the username
+      SECURITY_OAUTH2_PROVIDER: "keycloak" # Set this to your OAuth provider's name, e.g., 'google' or 'keycloak'
+      PUID: 1002
+      PGID: 1002
+      UMASK: "022"
+      SYSTEM_DEFAULTLOCALE: th-TH
+      UI_APPNAME: SAK Document Tools Platform (SDTP)
+      UI_HOMEDESCRIPTION: เครื่องมือจัดการเอกสาร PDF บริษัท ศักดิ์สยามลิสซิ่ง จำกัด (มหาชน)
+      UI_APPNAMENAVBAR: SAK-Document Tools Platform
+      SYSTEM_MAXFILESIZE: "100"
+      METRICS_ENABLED: "true"
+      SYSTEM_GOOGLEVISIBILITY: "true"
+    restart: on-failure:5

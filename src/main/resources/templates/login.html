@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <form th:if="${loginMethod} == 'all' or ${loginMethod} == 'normal'" th:action="@{'/login'}" method="post">
+        <!-- <form th:if="${loginMethod} == 'all' or ${loginMethod} == 'normal'" th:action="@{'/login'}" method="post">
           <h2 class="h5 mb-3 fw-normal" th:text="#{login.signinTitle}">Please sign in</h2>
           <div class="form-floating">
             <input type="text" class="form-control" id="username" name="username" placeholder="admin">
